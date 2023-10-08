@@ -1,0 +1,65 @@
+@startuml CommunityConnect Class Diagram
+
+class User {
+    +UserID: String
+    +Username: String
+    +Password: String
+    +Email: String
+    +CreateAccount(): void
+    +Login(): void
+    +Logout(): void
+}
+
+class Admin {
+    +RemoveUser(user: User): void
+    +ModifyUser(user: User): void
+    +BroadcastAnnouncement(message: String): void
+}
+
+Admin --|> User
+
+class Participant {
+    +UploadImage(image: Image): void
+    +PostFeed(feed: Feed): void
+    +FollowUser(user: User): void
+    +AddUser(user: User): void
+    +ViewFeed(): Feed[]
+    +SendMessage(message: Message): void
+}
+Participant --|> User
+
+class Feed {
+    +FeedID: String
+    +Content: String
+    +Timestamp: DateTime
+    +EditFeed(newContent: String): void
+    +DeleteFeed(): void
+}
+
+class Image {
+    +ImageID: String
+    +Data: Byte[]
+    +Timestamp: DateTime
+    +DeleteImage(): void
+}
+
+class Message {
+    +MessageID: String
+    +Content: String
+    +Timestamp: DateTime
+    +Sender: Participant
+    +Recipient: Participant
+}
+
+class Announcement {
+    +AnnouncementID: String
+    +Content: String
+    +Timestamp: DateTime
+}
+
+User "1" <-- "0..*" Feed : Posts
+User "1" <-- "0..*" Image : Uploads
+Participant "1" <-- "0..*" Message : Sends/Receives
+Admin "1" -- "0..*" Announcement : Broadcasts
+
+@enduml

@@ -1,0 +1,46 @@
+@startuml
+
+!define RECTANGLE class
+
+RECTANGLE UserInterface {
+  + Register()
+  + Login()
+  + ViewProfile()
+  + SendMessage()
+  + PostFeed()
+}
+
+RECTANGLE AdminInterface {
+  + CreateUser()
+  + DeleteUser()
+  + BroadcastAnnouncement()
+  + ManageContent()
+}
+
+RECTANGLE ParticipantInterface {
+  + CreateProfile()
+  + EditProfile()
+  + FollowUser()
+  + ViewFeeds()
+}
+
+RECTANGLE BackendServices {
+  + Authentication()
+  + Authorization()
+  + DataManagement()
+}
+
+RECTANGLE Database {
+  + UserData
+  + PostData
+  + MessageData
+}
+
+UserInterface -[hidden]-> AdminInterface
+AdminInterface -[hidden]-> ParticipantInterface
+UserInterface --> BackendServices : Uses
+AdminInterface --> BackendServices : Uses
+ParticipantInterface --> BackendServices : Uses
+BackendServices --> Database : Accesses
+
+@enduml
